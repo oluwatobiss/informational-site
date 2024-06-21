@@ -7,21 +7,20 @@ const port = 8080;
 
 const server = createServer((req, res) => {
   const pathname = new URL(req.url, `http://${host}:${port}`).pathname;
+  const filePath = `.${pathname === "/" ? "/index" : pathname}.html`;
 
-  readFile(
-    `.${pathname === "/" ? "/index.html" : pathname}`,
-    (err, content) => {
-      if (err) {
-        res.writeHead(404, { "Content-Type": "text/html" });
-        readFile("./404.html", (err, content) => {
-          res.end(content);
-        });
-        return;
-      }
-      res.writeHead(200, { "Content-Type": "text/html" });
-      res.end(content);
+  function showContent(err, content) {
+    if (err) {
+      res.writeHead(404, { "Content-Type": "text/html" });
+      return readFile("./404.html", (err, content) => {
+        res.end(content);
+      });
     }
-  );
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.end(content);
+  }
+
+  readFile(filePath, showContent);
 });
 
 server.listen(port, host, () => {
