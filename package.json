@@ -2,7 +2,7 @@
   "name": "informational-site-with-express",
   "version": "1.0.0",
   "description": "A Basic informational site to practice Node.js app development.",
-  "main": "index.js",
+  "main": "app.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
