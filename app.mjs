@@ -9,7 +9,7 @@ const errorMessage = (code) =>
 let response = null;
 
 function showContent(err, content) {
-  err && res.send(errorMessage(err.code));
+  err && response.send(errorMessage(err.code));
   response.end(content);
 }
 
