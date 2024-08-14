@@ -8,37 +8,49 @@ const port = 3000;
 app.get("/", (req, res) => {
   function showContent(err, content) {
     if (err) {
-      return readFile("./404.html", (err, content) => {
-        res.status(404).end(content);
-      });
+      res.send(
+        `<p><strong>${err.code} ERROR:</strong> Sorry, we cannot read the file!</p>`
+      );
     }
     res.end(content);
   }
-  readFile("index.html", showContent);
+  readFile("./index.html", showContent);
 });
 
 app.get("/about", (req, res) => {
   function showContent(err, content) {
     if (err) {
-      return readFile("./404.html", (err, content) => {
-        res.status(404).end(content);
-      });
+      res.send(
+        `<p><strong>${err.code} ERROR:</strong> Sorry, we cannot read the file!</p>`
+      );
     }
     res.end(content);
   }
-  readFile("about.html", showContent);
+  readFile("./about.html", showContent);
 });
 
 app.get("/contact-me", (req, res) => {
   function showContent(err, content) {
     if (err) {
-      return readFile("./404.html", (err, content) => {
-        res.status(404).end(content);
-      });
+      res.send(
+        `<p><strong>${err.code} ERROR:</strong> Sorry, we cannot read the file!</p>`
+      );
     }
     res.end(content);
   }
-  readFile("contact-me.html", showContent);
+  readFile("./contact-me.html", showContent);
+});
+
+app.get("*", (req, res) => {
+  function showContent(err, content) {
+    if (err) {
+      res.send(
+        `<p><strong>${err.code} ERROR:</strong> Sorry, we cannot read the file!</p>`
+      );
+    }
+    res.end(content);
+  }
+  readFile("./404.html", showContent);
 });
 
 app.listen(port, () => {
