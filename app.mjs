@@ -1,36 +1,26 @@
 import express from "express";
-import { readFile } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const app = express();
 const host = "localhost";
 const port = 3000;
-const errorMessage = (code) =>
-  `<p><strong>${code} ERROR:</strong> Sorry, we cannot read the file!</p>`;
-let response = null;
-
-function showContent(err, content) {
-  err && response.send(errorMessage(err.code));
-  response.end(content);
-}
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.get("/", (req, res) => {
-  response = res;
-  readFile("./index.html", showContent);
+  res.sendFile(join(__dirname, "index.html"));
 });
 
 app.get("/about", (req, res) => {
-  response = res;
-  readFile("./about.html", showContent);
+  res.sendFile(join(__dirname, "about.html"));
 });
 
 app.get("/contact-me", (req, res) => {
-  response = res;
-  readFile("./contact-me.html", showContent);
+  res.sendFile(join(__dirname, "contact-me.html"));
 });
 
 app.get("*", (req, res) => {
-  response = res;
-  readFile("./404.html", showContent);
+  res.sendFile(join(__dirname, "404.html"));
 });
 
 app.listen(port, () => {
