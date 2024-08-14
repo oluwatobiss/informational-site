@@ -6,36 +6,30 @@ const host = "localhost";
 const port = 3000;
 const errorMessage = (code) =>
   `<p><strong>${code} ERROR:</strong> Sorry, we cannot read the file!</p>`;
+let response = null;
+
+function showContent(err, content) {
+  err && res.send(errorMessage(err.code));
+  response.end(content);
+}
 
 app.get("/", (req, res) => {
-  function showContent(err, content) {
-    err && res.send(errorMessage(err.code));
-    res.end(content);
-  }
+  response = res;
   readFile("./index.html", showContent);
 });
 
 app.get("/about", (req, res) => {
-  function showContent(err, content) {
-    err && res.send(errorMessage(err.code));
-    res.end(content);
-  }
+  response = res;
   readFile("./about.html", showContent);
 });
 
 app.get("/contact-me", (req, res) => {
-  function showContent(err, content) {
-    err && res.send(errorMessage(err.code));
-    res.end(content);
-  }
+  response = res;
   readFile("./contact-me.html", showContent);
 });
 
 app.get("*", (req, res) => {
-  function showContent(err, content) {
-    err && res.send(errorMessage(err.code));
-    res.end(content);
-  }
+  response = res;
   readFile("./404.html", showContent);
 });
 
