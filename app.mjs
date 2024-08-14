@@ -4,14 +4,12 @@ import { readFile } from "node:fs";
 const app = express();
 const host = "localhost";
 const port = 3000;
+const errorMessage = (code) =>
+  `<p><strong>${code} ERROR:</strong> Sorry, we cannot read the file!</p>`;
 
 app.get("/", (req, res) => {
   function showContent(err, content) {
-    if (err) {
-      res.send(
-        `<p><strong>${err.code} ERROR:</strong> Sorry, we cannot read the file!</p>`
-      );
-    }
+    err && res.send(errorMessage(err.code));
     res.end(content);
   }
   readFile("./index.html", showContent);
@@ -19,11 +17,7 @@ app.get("/", (req, res) => {
 
 app.get("/about", (req, res) => {
   function showContent(err, content) {
-    if (err) {
-      res.send(
-        `<p><strong>${err.code} ERROR:</strong> Sorry, we cannot read the file!</p>`
-      );
-    }
+    err && res.send(errorMessage(err.code));
     res.end(content);
   }
   readFile("./about.html", showContent);
@@ -31,11 +25,7 @@ app.get("/about", (req, res) => {
 
 app.get("/contact-me", (req, res) => {
   function showContent(err, content) {
-    if (err) {
-      res.send(
-        `<p><strong>${err.code} ERROR:</strong> Sorry, we cannot read the file!</p>`
-      );
-    }
+    err && res.send(errorMessage(err.code));
     res.end(content);
   }
   readFile("./contact-me.html", showContent);
@@ -43,11 +33,7 @@ app.get("/contact-me", (req, res) => {
 
 app.get("*", (req, res) => {
   function showContent(err, content) {
-    if (err) {
-      res.send(
-        `<p><strong>${err.code} ERROR:</strong> Sorry, we cannot read the file!</p>`
-      );
-    }
+    err && res.send(errorMessage(err.code));
     res.end(content);
   }
   readFile("./404.html", showContent);
